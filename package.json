@@ -1,0 +1,21 @@
+{
+  "name": "multi-tenant-restaurant",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "apps/customer-web",
+    "apps/admin-web",
+    "packages/*"
+  ],
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "^3.9.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
