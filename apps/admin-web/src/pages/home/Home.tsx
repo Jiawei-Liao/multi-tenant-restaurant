@@ -1,7 +1,8 @@
 import { ArrowRight, Utensils } from "lucide-react";
-import styles from "./HomePage.module.css";
+import styles from "./Home.module.css";
+import { Link } from "react-router-dom";
 
-function HomePage() {
+function Home() {
   return (
     <main className={styles.page}>
       <section className={styles.content} aria-labelledby="home-title">
@@ -15,7 +16,7 @@ function HomePage() {
         </div>
 
         <nav className={styles.actions} aria-label="Account">
-          <a className={`${styles.action} ${styles.signup}`} href="/signup">
+          <Link className={`${styles.action} ${styles.signup}`} to="/signup">
             <span>
               <span className={styles.actionTitle}>Get started</span>
               <span className={styles.actionText}>
@@ -23,19 +24,19 @@ function HomePage() {
               </span>
             </span>
             <ArrowRight className={styles.arrow} aria-hidden="true" />
-          </a>
+          </Link>
 
-          <a className={styles.action} href="/login">
+          <Link className={styles.action} to="/login">
             <span>
               <span className={styles.actionTitle}>Log in</span>
               <span className={styles.actionText}>Back to your dashboard</span>
             </span>
             <ArrowRight className={styles.arrow} aria-hidden="true" />
-          </a>
+          </Link>
         </nav>
       </section>
     </main>
   );
 }
 
-export default HomePage;
+export default Home;

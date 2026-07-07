@@ -16,9 +16,24 @@ dir = "apps/admin-web"
 
 [tasks.dev-api]
 description = "Spring Boot API"
-run = "mvn spring-boot:run"
 dir = "apps/api"
+run = """
+if (!(Test-Path "load-env.ps1")) {
+  Write-Host "Missing apps/api/load-env.ps1"
+  exit 1
+}
+
+. ./load-env.ps1
+mvn spring-boot:run
+"""
+shell = "pwsh -Command"
+
+[tasks.dev-api-watch]
+description = "Recompile API on change"
+dir = "apps/api"
+run = "npx nodemon --watch src/main/java --ext java --exec \"mvn compile -q -o\""
+shell = "pwsh -Command"
 
 [tasks.dev]
 description = "Run everything"
-depends = ["dev-customer", "dev-admin", "dev-api"]
+depends = ["dev-customer", "dev-admin", "dev-api", "dev-api-watch"]

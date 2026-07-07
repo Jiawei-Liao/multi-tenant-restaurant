@@ -1,4 +1,4 @@
-package com.yourapp.api;
+package com.jiawe.multitenantrestaurant.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

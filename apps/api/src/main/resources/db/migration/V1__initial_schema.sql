@@ -23,10 +23,7 @@ CREATE TABLE public.tenants (
   id UUID PRIMARY KEY DEFAULT uuidv7(),
   domain VARCHAR(63) UNIQUE NOT NULL,
   name VARCHAR(255) UNIQUE NOT NULL,
-  icon_url VARCHAR(500),
-  isolation_mode VARCHAR(20) NOT NULL DEFAULT 'shared'
-    CHECK (isolation_mode IN ('shared', 'dedicated')),
-  db_connection_ref VARCHAR(255),
+  icon_key VARCHAR(512),
   theme_config JSONB NOT NULL DEFAULT '{}',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -113,7 +110,7 @@ CREATE TABLE public.menu_items (
   category_id UUID REFERENCES public.menu_categories(id) ON DELETE SET NULL,
   name VARCHAR(255) NOT NULL,
   description TEXT,
-  image_url VARCHAR(500),
+  image_key VARCHAR(512),
   base_price_cents INT NOT NULL,    -- fallback if no pricing_group override exists
   status VARCHAR(20) NOT NULL DEFAULT 'draft'
     CHECK (status IN ('draft', 'published')),

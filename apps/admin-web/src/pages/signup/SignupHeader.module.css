@@ -1,0 +1,123 @@
+.header {
+  margin-bottom: 34px;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 22px;
+  list-style: none;
+  color: var(--muted-foreground);
+  font-size: 15px;
+  font-weight: 500;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  span {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted-foreground);
+    background: var(--background);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.activeStep {
+  color: var(--foreground);
+
+  span {
+    border-color: var(--foreground);
+    color: var(--primary-foreground);
+    background: var(--primary);
+  }
+}
+
+.completeStep {
+  color: var(--muted-foreground);
+  span {
+    border-color: #2f7d68;
+    color: #ffffff;
+    background: #2f7d68;
+  }
+}
+
+.stepDivider {
+  width: 26px;
+  height: 1px;
+  flex: 0 0 26px;
+  background: var(--border);
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  color: var(--muted-foreground);
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 120ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.heading {
+  margin-bottom: 0;
+  h1 {
+    margin: 0 0 6px;
+    color: var(--foreground);
+    font-size: 24px;
+    font-weight: 750;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 420px) {
+  .steps {
+    font-size: 14px;
+  }
+
+  .stepDivider {
+    width: 16px;
+    flex-basis: 16px;
+  }
+
+  .heading h1 {
+    font-size: 22px;
+  }
+}

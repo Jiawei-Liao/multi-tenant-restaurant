@@ -19,8 +19,8 @@
   place-items: center;
   margin-bottom: 28px;
   border-radius: 8px;
-  color: #ffffff;
-  background: #1f1f1c;
+  color: var(--primary-foreground);
+  background: var(--primary);
 }
 
 .logoIcon {
@@ -42,10 +42,11 @@
 
 .heading p {
   margin: 0;
-  color: #716d68;
+  color: var(--muted-foreground);
   font-size: 16px;
   line-height: 1.45;
 }
+
 .actions {
   width: 100%;
   display: flex;
@@ -54,12 +55,12 @@
 }
 
 .action {
-  --action-bg: #ffffff;
-  --action-bg-hover: #f5f4f1;
-  --action-border: #dedbd5;
-  --action-border-hover: #c8c4bd;
-  --action-color: #252421;
-  --action-text-color: #716d68;
+  --action-bg: var(--card);
+  --action-bg-hover: var(--secondary);
+  --action-border: var(--border);
+  --action-border-hover: var(--ring);
+  --action-color: var(--card-foreground);
+  --action-text-color: var(--muted-foreground);
 
   width: 100%;
   min-height: 70px;
@@ -69,7 +70,7 @@
   gap: 18px;
   padding: 16px 18px;
   border: 1px solid var(--action-border);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   color: var(--action-color);
   background: var(--action-bg);
   text-align: left;
@@ -87,17 +88,17 @@
   }
 
   &:focus-visible {
-    outline: 3px solid rgba(33, 32, 29, 0.2);
+    outline: 3px solid var(--ring);
     outline-offset: 3px;
   }
 
   &.signup {
-    --action-bg: #1f1f1c;
-    --action-bg-hover: #2b2b27;
-    --action-border: #1f1f1c;
-    --action-border-hover: #2b2b27;
-    --action-color: #ffffff;
-    --action-text-color: #c9c6bf;
+    --action-bg: var(--primary);
+    --action-bg-hover: var(--primary);
+    --action-border: var(--primary);
+    --action-border-hover: var(--primary);
+    --action-color: var(--primary-foreground);
+    --action-text-color: color-mix(in oklch, var(--primary-foreground) 70%, transparent);
   }
 
   .actionTitle {

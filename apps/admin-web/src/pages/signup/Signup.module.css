@@ -1,0 +1,99 @@
+.page {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  padding: 48px 18px 28px;
+}
+
+.panel {
+  width: min(100%, 500px);
+  --control-height: 40px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--foreground);
+    font-size: 16px;
+
+    label {
+      padding: 0;
+    }
+
+    input,
+    [data-slot="input-group"] {
+      height: var(--control-height);
+    }
+  }
+}
+
+.helper {
+  min-height: 20px;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+
+  &.success {
+    color: var(--success);
+  }
+
+  &.error {
+    color: var(--destructive);
+  }
+}
+
+.primaryButton {
+  width: 100%;
+  height: var(--control-height);
+  margin-top: 28px;
+}
+
+.loginText {
+  margin: 28px 0 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  text-align: center;
+
+  a {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.spinner {
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 420px) {
+  .page {
+    padding: 28px 16px 24px;
+  }
+
+  .domainSuffix {
+    min-width: 58px;
+    max-width: 38%;
+  }
+
+  .domainStatus {
+    width: 34px;
+    flex-basis: 34px;
+  }
+}

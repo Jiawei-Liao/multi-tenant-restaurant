@@ -5,6 +5,9 @@
     "lib": ["ESNext", "DOM"],
     "types": ["vite/client"],
     "allowArbitraryExtensions": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
     /* Linting */
     "noUnusedLocals": true,
