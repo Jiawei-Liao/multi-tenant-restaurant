@@ -1,17 +1,18 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
-import Home from "./pages/home/Home";
-import Signup from "./pages/signup/Signup";
+import { AuthProvider } from "@/features/auth";
+import TenantBranding from "@/layout/TenantBranding";
+import { AppRoutes } from "./app/routes";
 
 function App() {
   return (
     <div className="app-shell">
       <BrowserRouter>
-        <Toaster position="top-center" richColors />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
+        <AuthProvider>
+          <TenantBranding />
+          <Toaster position="top-center" richColors />
+          <AppRoutes />
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );

@@ -24,3 +24,11 @@ jwt:
   secret: ${JWT_SECRET}
   access-token-expiry-minutes: 15
   refresh-token-expiry-days: 30
+  refresh-token-concurrency-grace-seconds: 5
+auth:
+  cookie:
+    secure: ${AUTH_COOKIE_SECURE:false}
+    same-site: ${AUTH_COOKIE_SAME_SITE:Lax}
+    refresh-token-path: /api/auth
+cors:
+  allowed-origin-patterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:*,http://127.0.0.1:*}

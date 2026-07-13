@@ -4,15 +4,15 @@ node = "24"
 java = "25"
 maven = "3.9"
 
-[tasks.dev-customer]
-description = "Customer storefront"
-run = "bun run dev"
-dir = "apps/customer-web"
-
 [tasks.dev-admin]
 description = "Admin dashboard"
-run = "bun run dev"
+run = "bun run dev -- --port 5173 --strictPort"
 dir = "apps/admin-web"
+
+[tasks.dev-customer]
+description = "Customer storefront"
+run = "bun run dev -- --port 5174 --strictPort"
+dir = "apps/customer-web"
 
 [tasks.dev-api]
 description = "Spring Boot API"
@@ -36,4 +36,4 @@ shell = "pwsh -Command"
 
 [tasks.dev]
 description = "Run everything"
-depends = ["dev-customer", "dev-admin", "dev-api", "dev-api-watch"]
+depends = ["dev-admin", "dev-customer", "dev-api", "dev-api-watch"]

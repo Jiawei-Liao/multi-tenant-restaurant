@@ -1,0 +1,80 @@
+.sidebar {
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--sidebar-border);
+  background: var(--sidebar);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 8px;
+}
+
+.navLink {
+  min-width: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  border-radius: 8px;
+  color: var(--sidebar-foreground);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+
+.navLink:focus-visible {
+  outline: 3px solid color-mix(in oklch, var(--sidebar-ring) 45%, transparent);
+  outline-offset: -1px;
+}
+
+.navLink svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.active {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+
+.navLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebarCollapsed .navLink {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebarCollapsed .navLabel {
+  display: none;
+}
+
+.mobileNavigationPanel {
+  width: min(82vw, 288px);
+  border-color: var(--sidebar-border);
+  background: var(--sidebar);
+}
+
+.mobileNavigationHeader {
+  padding-right: 48px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.mobileSidebar {
+  flex: 1;
+  border-right: 0;
+  overflow-y: auto;
+}

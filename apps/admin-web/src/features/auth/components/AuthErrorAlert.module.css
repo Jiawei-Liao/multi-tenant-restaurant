@@ -1,0 +1,50 @@
+.alert {
+  min-height: var(--control-height, 40px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 12px;
+  border: 1px solid color-mix(in srgb, var(--destructive), transparent 60%);
+  border-radius: var(--radius-lg);
+  color: var(--destructive);
+  background: color-mix(in srgb, var(--destructive), transparent 90%);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.message {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.dismiss {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--destructive), transparent 90%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--destructive), transparent 35%);
+    outline-offset: 1px;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,0 +1,25 @@
+.loader {
+  position: relative;
+  width: clamp(200px, 45vmin, 360px);
+  height: clamp(200px, 45vmin, 360px);
+  overflow: hidden;
+  color: #f2b134;
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 14%,
+    black 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 14%,
+    black 100%
+  );
+}
+
+.piece {
+  position: absolute;
+  bottom: -40px;
+  will-change: transform;
+}

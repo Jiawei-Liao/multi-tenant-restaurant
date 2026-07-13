@@ -3,6 +3,7 @@
 -- Primary keys use UUIDv7 so tenant data can move between shared and dedicated databases without ID remapping, while keeping inserts mostly time-ordered
 
 CREATE SCHEMA IF NOT EXISTS public;
+CREATE EXTENSION IF NOT EXISTS citext;
 
 -- Timezone validation uses PostgreSQL's timezone catalog.
 CREATE FUNCTION public.is_valid_timezone(tz TEXT)
@@ -58,34 +59,78 @@ CREATE INDEX idx_locations_tenant ON public.locations (tenant_id);
 
 CREATE TABLE public.users (
   id UUID PRIMARY KEY DEFAULT uuidv7(),
-  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
-  email VARCHAR(255) NOT NULL,
+  email CITEXT UNIQUE NOT NULL,
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100),
   password_hash VARCHAR(255) NOT NULL,
-  role VARCHAR(20) NOT NULL
-    CHECK (role IN ('owner', 'manager', 'staff')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  deleted_at TIMESTAMPTZ,   -- NULL = active
-  UNIQUE (tenant_id, email)
+  deleted_at TIMESTAMPTZ   -- NULL = active
 );
-CREATE INDEX idx_users_tenant ON public.users (tenant_id);
+
+CREATE TABLE public.tenant_users (
+  id UUID PRIMARY KEY DEFAULT uuidv7(),
+  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+  role VARCHAR(20) NOT NULL
+    CHECK (role IN ('owner', 'admin', 'staff')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  deleted_at TIMESTAMPTZ
+);
+CREATE INDEX idx_tenant_users_tenant ON public.tenant_users (tenant_id);
+CREATE INDEX idx_tenant_users_user ON public.tenant_users (user_id);
+CREATE UNIQUE INDEX idx_tenant_users_active_unique
+  ON public.tenant_users (tenant_id, user_id)
+  WHERE deleted_at IS NULL;
+
+CREATE TABLE public.tenant_invites (
+  id UUID PRIMARY KEY DEFAULT uuidv7(),
+  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
+  email CITEXT NOT NULL,
+  role VARCHAR(20) NOT NULL
+    CHECK (role IN ('owner', 'admin', 'staff')),
+  invited_by UUID REFERENCES public.tenant_users(id) ON DELETE SET NULL,
+  token_hash VARCHAR(255) UNIQUE NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  accepted_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_tenant_invites_tenant ON public.tenant_invites (tenant_id);
+CREATE INDEX idx_tenant_invites_email_pending ON public.tenant_invites (email)
+  WHERE accepted_at IS NULL;
+CREATE INDEX idx_tenant_invites_invited_by ON public.tenant_invites (invited_by);
+CREATE UNIQUE INDEX idx_tenant_invites_pending_unique
+  ON public.tenant_invites (tenant_id, email)
+  WHERE accepted_at IS NULL;
 
 -- 1 user can belong to multiple locations
 CREATE TABLE public.user_location_assignments (
-  user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+  tenant_user_id UUID NOT NULL REFERENCES public.tenant_users(id) ON DELETE CASCADE,
   location_id UUID NOT NULL REFERENCES public.locations(id) ON DELETE CASCADE,
-  PRIMARY KEY (user_id, location_id)
+  PRIMARY KEY (tenant_user_id, location_id)
 );
+
+CREATE TABLE public.refresh_token_families (
+  id UUID PRIMARY KEY DEFAULT uuidv7(),
+  user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+  revoked_at TIMESTAMPTZ,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_refresh_token_families_user ON public.refresh_token_families (user_id);
 
 CREATE TABLE public.refresh_tokens (
   id UUID PRIMARY KEY DEFAULT uuidv7(),
   user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
-  token_hash VARCHAR(255) NOT NULL,
-  family_id UUID NOT NULL,
-  revoked BOOLEAN NOT NULL DEFAULT false,
+  selected_tenant_user_id UUID REFERENCES public.tenant_users(id) ON DELETE SET NULL,
+  token_hash VARCHAR(255) UNIQUE NOT NULL,
+  family_id UUID NOT NULL REFERENCES public.refresh_token_families(id) ON DELETE CASCADE,
+  revoked_at TIMESTAMPTZ,
+  rotated_at TIMESTAMPTZ,
   expires_at TIMESTAMPTZ NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX idx_refresh_tokens_user ON public.refresh_tokens (user_id);
+CREATE INDEX idx_refresh_tokens_selected_tenant_user ON public.refresh_tokens (selected_tenant_user_id);
 CREATE INDEX idx_refresh_tokens_family ON public.refresh_tokens (family_id);
 
 -- ---------- MENU ----------
@@ -267,7 +312,7 @@ CREATE TABLE public.order_status_history (
   id UUID PRIMARY KEY DEFAULT uuidv7(),
   order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
   status VARCHAR(20) NOT NULL,
-  changed_by UUID REFERENCES public.users(id) ON DELETE SET NULL,
+  changed_by UUID REFERENCES public.tenant_users(id) ON DELETE SET NULL,
   changed_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 

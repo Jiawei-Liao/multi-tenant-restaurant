@@ -1,0 +1,127 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+}
+
+.content {
+  width: min(100%, 420px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 28px;
+  border-radius: 8px;
+  color: var(--primary-foreground);
+  background: var(--primary);
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.heading {
+  margin-bottom: 40px;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action {
+  --action-bg: var(--card);
+  --action-bg-hover: var(--secondary);
+  --action-border: var(--border);
+  --action-border-hover: var(--ring);
+  --action-color: var(--card-foreground);
+  --action-text-color: var(--muted-foreground);
+
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--action-border);
+  border-radius: var(--radius-lg);
+  color: var(--action-color);
+  background: var(--action-bg);
+  text-align: left;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &:hover {
+    border-color: var(--action-border-hover);
+    background: var(--action-bg-hover);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  &.signup {
+    --action-bg: var(--primary);
+    --action-bg-hover: var(--primary);
+    --action-border: var(--primary);
+    --action-border-hover: var(--primary);
+    --action-color: var(--primary-foreground);
+    --action-text-color: color-mix(in oklch, var(--primary-foreground) 70%, transparent);
+  }
+
+  h2 {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  p {
+    display: block;
+    margin-top: 3px;
+    color: var(--action-text-color);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .arrow {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    color: currentColor;
+    opacity: 0.8;
+    stroke-width: 1.8;
+  }
+}

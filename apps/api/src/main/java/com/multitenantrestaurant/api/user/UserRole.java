@@ -1,3 +1,3 @@
 package com.multitenantrestaurant.api.user;
 
-public enum UserRole { OWNER, MANAGER, STAFF }
+public enum UserRole { OWNER, ADMIN, STAFF }

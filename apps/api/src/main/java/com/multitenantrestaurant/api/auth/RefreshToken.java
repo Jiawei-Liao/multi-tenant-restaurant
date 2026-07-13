@@ -23,13 +23,20 @@ public class RefreshToken {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
+    @Column(name = "selected_tenant_user_id")
+    private UUID selectedTenantUserId;
+
     @Column(name = "token_hash", nullable = false, unique = true)
     private String tokenHash;
 
     @Column(name = "family_id", nullable = false)
     private UUID familyId;
 
-    private boolean revoked = false;
+    @Column(name = "revoked_at")
+    private Instant revokedAt;
+
+    @Column(name = "rotated_at")
+    private Instant rotatedAt;
 
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;

@@ -1,0 +1,39 @@
+.screen {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.errorContent {
+  width: min(100%, 480px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorIcon {
+  width: 40px;
+  height: 40px;
+  color: var(--muted-foreground);
+  stroke-width: 1.75;
+}
+
+.errorTitle {
+  margin: 24px 0 0;
+  color: var(--foreground);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.errorMessage {
+  margin: 10px 0 0;
+  color: var(--muted-foreground);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.retryButton {
+  margin-top: 24px;
+}
