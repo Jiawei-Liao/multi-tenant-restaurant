@@ -220,7 +220,7 @@ function isAuthTenant(value: unknown): value is AuthTenant {
   return (
     isRecord(value) &&
     typeof value.id === "string" &&
-    typeof value.domain === "string" &&
+    typeof value.subdomain === "string" &&
     typeof value.name === "string" &&
     (value.iconUrl === null || typeof value.iconUrl === "string") &&
     AUTH_ROLES.includes(value.role as UserRole)

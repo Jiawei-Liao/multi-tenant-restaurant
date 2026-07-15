@@ -22,7 +22,7 @@ $$;
 
 CREATE TABLE public.tenants (
   id UUID PRIMARY KEY DEFAULT uuidv7(),
-  domain VARCHAR(63) UNIQUE NOT NULL,
+  subdomain VARCHAR(63) UNIQUE NOT NULL,
   name VARCHAR(255) UNIQUE NOT NULL,
   icon_key VARCHAR(512),
   theme_config JSONB NOT NULL DEFAULT '{}',

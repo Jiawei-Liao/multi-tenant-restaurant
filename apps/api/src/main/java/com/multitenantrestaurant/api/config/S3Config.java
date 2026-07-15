@@ -17,6 +17,12 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 @EnableConfigurationProperties(S3Properties.class)
 public class S3Config {
 
+    private S3Configuration serviceConfiguration() {
+        return S3Configuration.builder()
+            .pathStyleAccessEnabled(true) // needed for R2
+            .build();
+    }
+
     @Bean
     public S3Client s3Client(S3Properties props) {
         return S3Client.builder()
@@ -24,9 +30,7 @@ public class S3Config {
             .region(Region.of(props.region()))
             .credentialsProvider(StaticCredentialsProvider.create(
                 AwsBasicCredentials.create(props.accessKey(), props.secretKey())))
-            .serviceConfiguration(S3Configuration.builder()
-                .pathStyleAccessEnabled(true) // needed for R2
-                .build())
+            .serviceConfiguration(serviceConfiguration())
             .build();
     }
 
@@ -37,6 +41,7 @@ public class S3Config {
             .region(Region.of(props.region()))
             .credentialsProvider(StaticCredentialsProvider.create(
                 AwsBasicCredentials.create(props.accessKey(), props.secretKey())))
+            .serviceConfiguration(serviceConfiguration())
             .build();
     }
 }

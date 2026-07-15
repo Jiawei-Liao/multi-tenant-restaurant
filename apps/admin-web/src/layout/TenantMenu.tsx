@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { Check, ChevronDown, LoaderCircle, Plus } from "lucide-react";
 import {
   Button,
@@ -19,6 +20,7 @@ import {
 import { useAuth, type AuthTenant, type UserRole } from "@/features/auth";
 import { useTenantSelection } from "@/features/tenants";
 import { APP_ICON_URL, APP_NAME } from "@/shared/branding";
+import { APP_PATHS } from "@/shared/routePaths";
 import type { HeaderMenuPresentation } from "./Header";
 import TenantAvatar from "./TenantAvatar";
 import styles from "./TenantMenu.module.css";
@@ -36,6 +38,7 @@ function TenantMenu({
   presentation,
   showTenantIdentity,
 }: TenantMenuProps) {
+  const navigate = useNavigate();
   const { availableTenants, currentTenant } = useAuth();
   const { isSelecting, openTenant, pendingTenantId } = useTenantSelection();
   const identityTenant = showTenantIdentity ? currentTenant : null;
@@ -54,6 +57,11 @@ function TenantMenu({
     if (await openTenant(tenant.id)) {
       onOpenChange(false);
     }
+  }
+
+  function handleCreateRestaurant() {
+    onOpenChange(false);
+    navigate(APP_PATHS.createRestaurant);
   }
 
   const triggerContent = (
@@ -123,10 +131,9 @@ function TenantMenu({
           <div className={styles.sheetFooter}>
             <Button
               className={styles.createButton}
-              disabled
-              title="Restaurant creation is coming soon"
               type="button"
               variant="ghost"
+              onClick={handleCreateRestaurant}
             >
               <Plus aria-hidden="true" />
               Create restaurant
@@ -187,10 +194,12 @@ function TenantMenu({
           })}
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled className={styles.createMenuItem}>
+        <DropdownMenuItem
+          className={styles.createMenuItem}
+          onClick={handleCreateRestaurant}
+        >
           <Plus aria-hidden="true" />
           Create restaurant
-          <span className={styles.comingSoon}>Soon</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

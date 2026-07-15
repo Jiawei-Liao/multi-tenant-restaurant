@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TenantRepository extends JpaRepository<Tenant, UUID> {
-    boolean existsByDomain(String domain);
+    boolean existsBySubdomain(String subdomain);
     boolean existsByName(String name);
-    Optional<Tenant> findByDomain(String domain);
+    Optional<Tenant> findBySubdomain(String subdomain);
 }

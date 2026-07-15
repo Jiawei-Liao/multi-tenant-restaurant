@@ -9,7 +9,7 @@ export type AuthUser = {
 
 export type AuthTenant = {
   id: string;
-  domain: string;
+  subdomain: string;
   name: string;
   iconUrl: string | null;
   role: UserRole;

@@ -130,11 +130,6 @@
   color: var(--muted-foreground);
 }
 
-.comingSoon {
-  margin-left: auto;
-  font-size: 11px;
-}
-
 .bottomSheet {
   overflow: hidden;
   border-color: var(--border);

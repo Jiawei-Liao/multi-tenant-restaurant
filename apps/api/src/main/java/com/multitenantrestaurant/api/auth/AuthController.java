@@ -46,7 +46,7 @@ public class AuthController {
         User user = new User();
         user.setEmail(email);
         user.setFirstName(req.firstName().trim());
-        user.setLastName(normalizeOptional(req.lastName()));
+        user.setLastName(normaliseOptional(req.lastName()));
         user.setPasswordHash(passwordEncoder.encode(req.password()));
 
         try {
@@ -140,7 +140,7 @@ public class AuthController {
         }
     }
 
-    private String normalizeOptional(String value) {
+    private String normaliseOptional(String value) {
         if (value == null || value.isBlank()) {
             return null;
         }

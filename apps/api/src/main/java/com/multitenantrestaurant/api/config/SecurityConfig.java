@@ -37,7 +37,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/api/auth/signup", "/api/auth/login", "/api/auth/refresh", "/api/auth/logout").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/select-tenant").authenticated()
-                .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/tenants/subdomain-availability").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/tenants", "/api/tenants/initiate").authenticated()
+                .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                 .anyRequest().denyAll())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling(ex -> ex.authenticationEntryPoint(

@@ -1,6 +1,7 @@
 package com.multitenantrestaurant.api.common.storage;
 
 import java.time.Duration;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
@@ -21,11 +23,6 @@ public class S3StorageService implements StorageService {
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
     private final S3Properties props;
-
-    @Override
-    public long getObjectSize(String key) {
-        return s3Client.headObject(HeadObjectRequest.builder().bucket(props.bucket()).key(key).build()).contentLength();
-    }
 
     @Override
     public String generatePresignedUploadUrl(String key, String contentType, Duration expiry) {
@@ -44,12 +41,22 @@ public class S3StorageService implements StorageService {
     }
 
     @Override
-    public boolean exists(String key) {
+    public Optional<StorageObjectMetadata> stat(String key) {
         try {
-            s3Client.headObject(HeadObjectRequest.builder().bucket(props.bucket()).key(key).build());
-            return true;
+            var response = s3Client.headObject(HeadObjectRequest.builder()
+                .bucket(props.bucket())
+                .key(key)
+                .build());
+            return Optional.of(new StorageObjectMetadata(response.contentLength(), response.contentType()));
         } catch (NoSuchKeyException e) {
-            return false;
+            return Optional.empty();
+        } catch (S3Exception e) {
+            // HeadObject has no response body, so missing objects commonly surface as a
+            // generic S3Exception rather than the modelled NoSuchKeyException.
+            if (e.statusCode() == 404) {
+                return Optional.empty();
+            }
+            throw e;
         }
     }
 

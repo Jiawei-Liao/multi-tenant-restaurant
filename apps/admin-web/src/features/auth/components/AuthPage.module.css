@@ -27,13 +27,13 @@
   }
 }
 
-form {
+.content form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-label {
+.content label {
   display: flex;
   flex-direction: column;
   gap: 8px;

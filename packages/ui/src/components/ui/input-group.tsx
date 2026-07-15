@@ -11,7 +11,7 @@ interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * A wrapper that takes ownership of the border/focus ring for composite
- * inputs (e.g. password + toggle button, domain + suffix + status icon).
+ * inputs (e.g. password + toggle button, subdomain + suffix + status icon).
  *
  * Any `<Input>` placed inside automatically strips its own border, shadow,
  * and focus ring via the `in-data-[slot=input-group]:*` selectors in

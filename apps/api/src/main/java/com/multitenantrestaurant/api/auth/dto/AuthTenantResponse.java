@@ -6,7 +6,7 @@ import com.multitenantrestaurant.api.user.UserRole;
 
 public record AuthTenantResponse(
     UUID id,
-    String domain,
+    String subdomain,
     String name,
     String iconUrl,
     UserRole role

@@ -19,7 +19,7 @@ public class Tenant {
     private UUID id;
 
     @Column(nullable = false, unique = true)
-    private String domain;
+    private String subdomain;
 
     @Column(nullable = false, unique = true)
     private String name;

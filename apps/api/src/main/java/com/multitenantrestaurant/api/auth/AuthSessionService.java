@@ -116,7 +116,7 @@ public class AuthSessionService {
         String iconUrl = tenant.getIconKey() == null ? null : storageService.publicUrl(tenant.getIconKey());
 
         return new AuthTenantResponse(
-            tenant.getId(), tenant.getDomain(), tenant.getName(), iconUrl, tenantUser.getRole()
+            tenant.getId(), tenant.getSubdomain(), tenant.getName(), iconUrl, tenantUser.getRole()
         );
     }
 
