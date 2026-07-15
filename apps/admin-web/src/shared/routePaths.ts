@@ -4,6 +4,7 @@ export const APP_PATHS = {
   signup: "/signup",
   app: "/app",
   onboarding: "/onboarding",
+  createRestaurant: "/create-restaurant",
   selectTenant: "/select-tenant",
   settings: "/settings",
   adminHome: "/admin",

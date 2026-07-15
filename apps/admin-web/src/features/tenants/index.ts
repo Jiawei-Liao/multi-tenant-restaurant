@@ -1,3 +1,4 @@
+export { default as CreateRestaurantPage } from "./create/CreateRestaurantPage";
 export { default as OnboardingPage } from "./onboarding/OnboardingPage";
 export { useTenant } from "./useTenant";
 export {

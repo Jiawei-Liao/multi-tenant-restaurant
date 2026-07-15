@@ -9,7 +9,7 @@ import {
   TenantEntryRoute,
   useAuth,
 } from "@/features/auth";
-import { OnboardingPage } from "@/features/tenants";
+import { CreateRestaurantPage, OnboardingPage } from "@/features/tenants";
 import AdminHome from "@/features/admin-home/AdminHome";
 import Locations from "@/features/locations/Locations";
 import Menu from "@/features/menu/Menu";
@@ -36,6 +36,7 @@ export function AppRoutes() {
         <Route element={<AppLayout />}>
           <Route path={APP_PATHS.app} element={<TenantEntryRoute />} />
           <Route path={APP_PATHS.onboarding} element={<OnboardingRoute />} />
+          <Route path={APP_PATHS.createRestaurant} element={<CreateRestaurantPage />} />
           <Route path={APP_PATHS.selectTenant} element={<SelectTenantPage />} />
           <Route path={APP_PATHS.settings} element={<Settings />} />
 
