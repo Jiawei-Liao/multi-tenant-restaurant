@@ -1,12 +1,12 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@multi-tenant-restaurant/ui";
-import type { UserRole } from "@/features/auth";
+import type { AuthTenant } from "@/features/auth";
 import Sidebar from "./Sidebar";
+import TenantAvatar from "./TenantAvatar";
 import styles from "./AppNavigation.module.css";
 
 type AppNavigationProps = {
@@ -14,8 +14,7 @@ type AppNavigationProps = {
   isMobile: boolean;
   mobileOpen: boolean;
   onMobileOpenChange: (open: boolean) => void;
-  role: UserRole;
-  tenantName: string;
+  tenant: Pick<AuthTenant, "iconUrl" | "name" | "role">;
 };
 
 function AppNavigation({
@@ -23,15 +22,14 @@ function AppNavigation({
   isMobile,
   mobileOpen,
   onMobileOpenChange,
-  role,
-  tenantName,
+  tenant,
 }: AppNavigationProps) {
   if (!isMobile) {
     return (
       <Sidebar
         id="desktop-navigation"
         isCollapsed={desktopCollapsed}
-        role={role}
+        role={tenant.role}
       />
     );
   }
@@ -48,13 +46,18 @@ function AppNavigation({
         side="left"
       >
         <SheetHeader className={styles.mobileNavigationHeader}>
-          <SheetTitle>Navigation</SheetTitle>
-          <SheetDescription>{tenantName}</SheetDescription>
+          <SheetTitle className={styles.mobileNavigationTitle}>
+            <TenantAvatar
+              className={styles.mobileNavigationAvatar}
+              tenant={tenant}
+            />
+            <span className={styles.mobileNavigationName}>{tenant.name}</span>
+          </SheetTitle>
         </SheetHeader>
         <Sidebar
           className={styles.mobileSidebar}
           isCollapsed={false}
-          role={role}
+          role={tenant.role}
           onNavigate={() => onMobileOpenChange(false)}
         />
       </SheetContent>

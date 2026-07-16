@@ -1,4 +1,6 @@
 .sidebar {
+  --restaurant-accent: var(--sidebar-primary);
+
   min-height: 0;
   overflow: hidden;
   border-right: 1px solid var(--sidebar-border);
@@ -9,21 +11,35 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 12px 8px;
+  padding: 12px 0;
 }
 
 .navLink {
+  position: relative;
   min-width: 0;
-  height: 40px;
-  display: flex;
+  height: 44px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
-  padding: 0 10px;
-  border-radius: 8px;
+  padding: 0;
   color: var(--sidebar-foreground);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease;
+}
+
+.navLink::before {
+  position: absolute;
+  inset: 7px auto 7px 0;
+  width: 3px;
+  border-radius: 0 999px 999px 0;
+  background: var(--restaurant-accent);
+  content: "";
+  transform: scaleY(0);
+  transition: transform 140ms ease;
 }
 
 .navLink:hover {
@@ -40,26 +56,35 @@
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
+  justify-self: center;
 }
 
 .active {
   background: var(--sidebar-accent);
+  background: color-mix(in oklch, var(--restaurant-accent) 12%, var(--sidebar));
   color: var(--sidebar-accent-foreground);
 }
 
+.active::before {
+  transform: scaleY(1);
+}
+
+.active svg {
+  color: var(--restaurant-accent);
+}
+
 .navLabel {
+  min-width: 0;
+  padding-right: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.sidebarCollapsed .navLink {
-  justify-content: center;
-  padding: 0;
+  transition: opacity 100ms ease;
 }
 
 .sidebarCollapsed .navLabel {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .mobileNavigationPanel {
@@ -69,12 +94,47 @@
 }
 
 .mobileNavigationHeader {
-  padding-right: 48px;
+  width: 100%;
+  height: 56px;
+  min-height: 56px;
+  flex: 0 0 56px;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  padding: 0 52px 0 16px;
   border-bottom: 1px solid var(--sidebar-border);
+}
+
+.mobileNavigationTitle {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileNavigationAvatar {
+  width: 32px;
+  height: 32px;
+}
+
+.mobileNavigationName {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mobileSidebar {
   flex: 1;
   border-right: 0;
   overflow-y: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navLink,
+  .navLink::before,
+  .navLabel {
+    transition: none;
+  }
 }

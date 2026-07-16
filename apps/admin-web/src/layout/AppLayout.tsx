@@ -74,8 +74,7 @@ function AppLayout() {
             desktopCollapsed={isDesktopSidebarCollapsed}
             isMobile={isMobile}
             mobileOpen={isMobileSidebarOpen}
-            role={tenant.role}
-            tenantName={tenant.name}
+            tenant={tenant}
             onMobileOpenChange={setIsMobileSidebarOpen}
           />
         ) : null}
